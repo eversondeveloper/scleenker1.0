@@ -76,9 +76,8 @@ export const ListaProdutosStyled = styled.div`
 
   .buttons-catalogo {
     display: grid !important;
-    /* FORÇA 3 COLUNAS INDEPENDENTE DO CONTEÚDO */
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important; /* Gap levemente menor para caber em telas menores */
+    grid-template-columns: repeat(1, 1fr) !important;
+    gap: 8px !important; 
     width: 100% !important;
     justify-items: stretch !important;
     align-items: start !important;

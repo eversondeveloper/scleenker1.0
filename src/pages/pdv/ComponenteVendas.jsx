@@ -260,7 +260,7 @@ export default function ComponenteVendas({ sessaoAtual, temAtendentes, empresaGl
           </>
         ) : (
           <div className="espera-venda">
-            <div className="logo-espera">{empresaGlobal?.nome_fantasia?.toUpperCase() || "SCLEENKR"}</div>
+            <div className="logo-espera">{`${empresaGlobal?.nome_fantasia?.toUpperCase().substr(1, 15)}${"..."}` || "SCLEENKR"}</div>
             <div className="letreiro-container">
               <h2 className="letreiro-status">CAIXA LIVRE</h2>
             </div>

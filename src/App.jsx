@@ -120,14 +120,14 @@ function App() {
         <div className="logomenu">
           <div className="logodiv">
             <Link to="/scleenkr/" className="logo" onClick={fecharMenu}>
-              <LogoScleenkr width="auto" color="#f3931a" />
+              <LogoScleenkr width="auto" color="#f39200" />
             </Link>
           </div>
 
           {empresaSelecionada && (
             <div className="nomeempresa">
               <div className="nome-empresa-texto">
-                {empresaSelecionada.nome_fantasia ||
+                {`${"Empresa: "}${empresaSelecionada.nome_fantasia.substr(1,15)}${"..."}` ||
                   empresaSelecionada.razao_social}
               </div>
 

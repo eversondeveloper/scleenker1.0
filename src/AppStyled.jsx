@@ -53,8 +53,8 @@ export const AppStyled = styled.div`
       background: #252525;
       border-radius: 4px;
       border: 1px solid #333;
-      text-transform: uppercase;
       letter-spacing: 0.5px;
+      text-transform: capitalize;
     }
 
     .nome-atendente-header {

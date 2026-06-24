@@ -25,7 +25,7 @@ const MetodosPagamento = ({
   const [editandoDinheiro, setEditandoDinheiro] = useState(false);
   const [editandoMistoId, setEditandoMistoId] = useState(null);
 
-  const valoresBrasileiros = [0.05, 0.10, 0.50, 1, 2, 5, 10, 20, 50, 100];
+  const valoresBrasileiros = [0.05, 0.10, 0.25, 0.50, 1, 2, 5, 10, 20, 50, 100];
   const metodosConfig = [
     { nome: "Dinheiro", atalho: "F1", icone: IconeDinheiroSrc },
     { nome: "Crédito", atalho: "F2", icone: IconeCreditoSrc },
