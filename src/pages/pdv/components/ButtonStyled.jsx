@@ -13,12 +13,11 @@ export const ButtonStyled = styled.div`
   align-items: center;
   position: relative;
   width: 100% !important; 
-  height: 96px; /* Aumentado levemente para respirar melhor com o padding */
+  height: 96px; 
   padding: 16px 14px;
-  border-radius: 12px; /* Cantos modernos são mais suaves (8px a 16px) */
+  border-radius: 12px; 
   box-sizing: border-box;
-  user-select: none;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); /* Transição "iOS-like" ultra suave */
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
   overflow: hidden;
 
   /* COR BASE DESSATURADA E GRADIENTE DE LUZ (Efeito Glass/Glossy Moderno) */
