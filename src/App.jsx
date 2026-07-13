@@ -127,7 +127,7 @@ function App() {
           {empresaSelecionada && (
             <div className="nomeempresa">
               <div className="nome-empresa-texto">
-                {`${"Empresa: "}${empresaSelecionada.nome_fantasia.substr(1,15)}${"..."}` ||
+                {`${"Empresa: "}${empresaSelecionada.nome_fantasia.substr(0,15)}${"..."}` ||
                   empresaSelecionada.razao_social}
               </div>
 

@@ -13,9 +13,9 @@ export const RelatoriosStyled = styled.div`
     height: 100%;
     margin: 20px auto;
     padding: 25px;
-    background-color: #1e1e1e; /* Ultra escuro */
+    background-color: #1e1e1e; 
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Sombra mais profunda */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,6 +34,14 @@ export const RelatoriosStyled = styled.div`
         font-size: 16px;
     }
 
+    .cabecalho-relatorio{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
     /* ====================================================================
        ESTILOS PARA O NOVO CABEÇALHO DA EMPRESA (SecaoResumo)
     ==================================================================== */
@@ -42,7 +50,7 @@ export const RelatoriosStyled = styled.div`
         border-bottom: 1px solid #333;
         margin-bottom: 25px;
         width: 100%;
-
+    
         h2 {
             font-size: 20px;
             color: #E0E0E0;
@@ -115,11 +123,16 @@ export const RelatoriosStyled = styled.div`
             border-top: 1px solid #444;
             padding-top: 15px;
 
+            button{
+                margin-right: 10px;
+            }
+
             .metodos-header {
                 display: flex;
                 align-items: center;
                 gap: 10px;
                 margin-bottom: 15px;
+
 
                 label {
                     font-weight: 500;
