@@ -157,7 +157,7 @@ export const Relatorios = () => {
       if (window.confirm("❗ ESTA AÇÃO NÃO PODE SER DESFEITA. Todos os dados financeiros sumirão. Continuar?")) {
         const sucesso = await limparHistoricoTotal();
         if (sucesso) {
-          window.location.reload(); // Recarrega para limpar todos os estados globais
+          window.location.reload();
         } else {
           alert("Erro técnico ao tentar resetar o banco de dados.");
         }
@@ -182,7 +182,8 @@ export const Relatorios = () => {
   const handleAtualizarRetirada = async () => {
     if (!retiradaEditando) return;
     try {
-      await atualizarRetirada(retiradaEditando.id_retirada, novaRetirada);
+      const idAlvo = retiradaEditando.id_retirada || retiradaEditando.id;
+      await atualizarRetirada(idAlvo, novaRetirada);
       const fim = filtroDataFim || filtroDataInicio;
       await buscarRetiradas(filtroDataInicio, fim);
       fecharModalEdicao();
@@ -277,6 +278,8 @@ export const Relatorios = () => {
         limparFiltros={limparFiltros}
         limparFiltrosMetodos={limparFiltrosMetodos}
         METODOS_PAGAMENTO={METODOS_PAGAMENTO}
+        vendas={vendas}
+        vendasFiltradas={vendasFiltradas}
       />
 
       <SecaoResumo

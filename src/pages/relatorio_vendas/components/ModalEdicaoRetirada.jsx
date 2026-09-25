@@ -12,13 +12,12 @@ export const ModalEdicaoRetirada = ({
   if (!mostrar || !retiradaEditando) return null;
 
   const handleAtualizar = () => {
-    // Validação ajustada para incluir dataRetirada e timeRetirada
     if (!novaRetirada.valorRetirado || !novaRetirada.motivo || !novaRetirada.dataRetirada || !novaRetirada.timeRetirada) {
       alert('Preencha o valor, o motivo, a data e a hora da retirada.');
       return;
     }
 
-    const valor = parseFloat(novaRetirada.valorRetirado);
+    const valor = parseFloat(String(novaRetirada.valorRetirado).replace(',', '.'));
     if (isNaN(valor) || valor <= 0) {
       alert('Valor inválido. Digite um valor numérico positivo.');
       return;
@@ -26,8 +25,7 @@ export const ModalEdicaoRetirada = ({
 
     onAtualizar();
   };
-  
-  // Estilo comum para inputs de formulário
+
   const inputStyle = {
     width: '100%',
     padding: '8px',
@@ -45,16 +43,14 @@ export const ModalEdicaoRetirada = ({
         <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#2a2a2a', borderRadius: '5px' }}>
           <h4 style={{ margin: '0 0 10px 0', color: '#64ff8a' }}>Informações da Retirada</h4>
           <p style={{ margin: '5px 0' }}>
-            <strong>Registro Original:</strong> {new Date(retiradaEditando.data_retirada).toLocaleString("pt-BR")}
+            <strong>Registro Original:</strong> {new Date(retiradaEditando.data_retirada || retiradaEditando.data_corrigida).toLocaleString("pt-BR")}
           </p>
           <p style={{ margin: '5px 0' }}>
             <strong>Valor Original:</strong> R$ {parseFloat(retiradaEditando.valor).toFixed(2)}
           </p>
         </div>
 
-        {/* CONTROLE DE DATA E HORA AGRUPADO */}
         <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
-            {/* NOVO CAMPO: SELETOR DE DATA */}
             <div className="input-group" style={{ flex: 1 }}>
               <label>Data:</label>
               <input
@@ -70,7 +66,6 @@ export const ModalEdicaoRetirada = ({
               />
             </div>
             
-            {/* NOVO CAMPO: SELETOR DE HORA */}
             <div className="input-group" style={{ flex: 1 }}>
               <label>Hora:</label>
               <input
@@ -90,8 +85,7 @@ export const ModalEdicaoRetirada = ({
         <div className="input-group">
           <label>Novo Valor Retirado:</label>
           <input
-            type="number"
-            step="0.01"
+            type="text"
             value={novaRetirada.valorRetirado}
             onChange={(e) =>
               setNovaRetirada({

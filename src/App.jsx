@@ -258,7 +258,7 @@ function App() {
 
       <footer>
         <div className="footer">
-          <p>© $CLEENKR {dataAnooAtual} - Todos os direitos reservados</p>
+          <p>© $CLEENKER {dataAnooAtual} - Todos os direitos reservados</p>
         </div>
       </footer>
     </AppStyled>

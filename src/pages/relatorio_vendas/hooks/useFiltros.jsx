@@ -44,7 +44,7 @@ export const useFiltros = (vendas, retiradas, filtrarRetiradasLocalmente) => {
     if (!raw) return "";
     const date = new Date(raw);
     if (isNaN(date.getTime())) {
-        const match = raw.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+        const match = String(raw).match(/(\d{2})\/(\d{2})\/(\d{4})/);
         if (match) {
           const [, dd, mm, yyyy] = match;
           return `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`;
@@ -76,14 +76,18 @@ export const useFiltros = (vendas, retiradas, filtrarRetiradasLocalmente) => {
     return true;
   };
 
-  // Lógica de filtragem das vendas (RESTAURADA PARA PERÍODO COMPLETO)
-  const vendasFiltradas = useMemo(() => {
+  // Vendas filtradas apenas pelo período de datas (base estável para ver quais moedas tiveram vendas)
+  const vendasNoPeriodo = useMemo(() => {
     if (!vendas || vendas.length === 0) return [];
+    return vendas.filter((venda) => filtrarPorData(venda, "data_hora"));
+  }, [vendas, filtroDataInicio, filtroDataFim]);
 
-    // Filtra por data (pega todas as sessões dentro do dia/período)
-    let lista = vendas.filter((venda) => filtrarPorData(venda, "data_hora"));
+  // Vendas filtradas por data e por métodos de pagamento selecionados
+  const vendasFiltradas = useMemo(() => {
+    if (!vendasNoPeriodo || vendasNoPeriodo.length === 0) return [];
 
-    // Filtro por métodos de pagamento
+    let lista = vendasNoPeriodo;
+
     if (filtroMetodosPagamento.length > 0) {
       lista = lista.filter((venda) => {
         if (!venda.pagamentos || venda.pagamentos.length === 0) return false;
@@ -93,8 +97,8 @@ export const useFiltros = (vendas, retiradas, filtrarRetiradasLocalmente) => {
       });
     }
 
-    return lista.sort((a, b) => new Date(b.data_hora) - new Date(a.data_hora));
-  }, [vendas, filtroDataInicio, filtroDataFim, filtroMetodosPagamento]);
+    return [...lista].sort((a, b) => new Date(b.data_hora) - new Date(a.data_hora));
+  }, [vendasNoPeriodo, filtroMetodosPagamento]);
 
   const retiradasFiltradas = retiradas; 
 
@@ -108,6 +112,7 @@ export const useFiltros = (vendas, retiradas, filtrarRetiradasLocalmente) => {
     limparFiltros,
     limparFiltrosMetodos,
     METODOS_PAGAMENTO,
+    vendasNoPeriodo,
     vendasFiltradas,
     retiradasFiltradas,
   };

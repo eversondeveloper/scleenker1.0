@@ -1,19 +1,55 @@
 // components/SecaoFiltros.jsx
-import React from 'react';
+import React, { useMemo } from 'react';
 
 export const SecaoFiltros = ({
   filtroDataInicio,
   setFiltroDataInicio,
   filtroDataFim,
   setFiltroDataFim,
-  filtroMetodosPagamento,
+  filtroMetodosPagamento = [],
   toggleMetodoPagamento,
   limparFiltros,
   limparFiltrosMetodos,
-  METODOS_PAGAMENTO,
+  METODOS_PAGAMENTO = [],
+  vendas = [],
+  vendasFiltradas = []
 }) => {
+  // Base de vendas a considerar para habilitar os botões no período
+  const baseVendas = vendasFiltradas.length > 0 ? vendasFiltradas : vendas;
+
+  // Identifica todos os métodos de pagamento que realmente possuem vendas registradas
+  const metodosComVendaNoPeriodo = useMemo(() => {
+    const metodosPresentes = new Set();
+
+    baseVendas.forEach((venda) => {
+      if (Array.isArray(venda.pagamentos)) {
+        venda.pagamentos.forEach((pag) => {
+          const valor = parseFloat(pag.valor_pago || pag.valorPago || 0);
+          if (pag.metodo && valor > 0) {
+            metodosPresentes.add(pag.metodo.trim().toUpperCase());
+          }
+        });
+      }
+    });
+
+    return metodosPresentes;
+  }, [baseVendas]);
+
   return (
     <div className="secao-filtros">
+      {/* Estilo para tornar o ícone nativo do calendário branco no tema Dark */}
+      <style>
+        {`
+          .secao-filtros input[type="date"] {
+            color-scheme: dark;
+          }
+          .secao-filtros input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+          }
+        `}
+      </style>
+
       <div className="filtro-datas">
         <div className="input-group">
           <label>Data Início:</label>
@@ -43,16 +79,24 @@ export const SecaoFiltros = ({
           )}
         </div>
         <div className="botoes-metodos">
-          {METODOS_PAGAMENTO.map((metodo) => (
-            <button
-              key={metodo}
-              type="button"
-              onClick={() => toggleMetodoPagamento(metodo)}
-              className={`btn-metodo ${filtroMetodosPagamento.includes(metodo) ? 'ativo' : ''}`}
-            >
-              {metodo}
-            </button>
-          ))}
+          {METODOS_PAGAMENTO.map((metodo) => {
+            const metodoNormalizado = metodo.trim().toUpperCase();
+            const temVenda = metodosComVendaNoPeriodo.has(metodoNormalizado);
+            const ativo = filtroMetodosPagamento.includes(metodo);
+
+            return (
+              <button
+                key={metodo}
+                type="button"
+                disabled={!temVenda}
+                onClick={() => toggleMetodoPagamento(metodo)}
+                className={`btn-metodo ${ativo ? 'ativo' : ''} ${!temVenda ? 'desabilitado' : ''}`}
+                style={!temVenda ? { opacity: 0.35, cursor: 'not-allowed' } : {}}
+              >
+                {metodo}
+              </button>
+            );
+          })}
         </div>
       </div>
 
